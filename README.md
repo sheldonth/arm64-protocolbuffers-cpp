@@ -11,7 +11,17 @@ The easiest way to use this script is to simply clone the gist onto your
 machine using the following command:
 
 ```
-$ git clone https://gist.github.com/9487468ae3375d0db0cc.git build-protobuf
+$ git clone https://gist.github.com/4bc676dfec649843af1e.git build-protobuf
+```
+
+# Prepare enviroment
+
+make sure `automake`, `libtool`, and `pkgconfig` are ready:
+
+```
+brew install automake
+brew install libtool
+brew install pkgconfig
 ```
 
 # Performing the Build
@@ -48,9 +58,25 @@ need to adjust the path to `protoc`.
 
 # Import to XCode
 
- * add `protobuf/include` and `protobuf/lib/libprotobuf-lite.a` into source
+ * add `protobuf/include/**.h` and `protobuf/lib/libprotobuf-lite.a` into xcode project
  * change project C++ Language Dialect to `C++11 [-std=c++11]`
  * change project C++ Runtime Types to `libc++ (LLVM C++ standard library with C++11 support`
+
+# Workaround `TYPE_BOOL` error in XCode
+
+ * add `#undef TYPE_BOOL` line on top of protobuf/include/google/protobuf/wire_format_light.h
+
+```
+....omit...
+#ifndef GOOGLE_PROTOBUF_WIRE_FORMAT_LITE_H__
+#define GOOGLE_PROTOBUF_WIRE_FORMAT_LITE_H__
+
+#undef TYPE_BOOL
+
+#include <string>
+#include <google/protobuf/stubs/common.h>
+....omit...
+```
 
 # Change logs
 
