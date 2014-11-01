@@ -22,8 +22,8 @@ USE_GIT_MASTER=NO
 
 PROTOBUF_GIT_URL=https://github.com/google/protobuf.git
 PROTOBUF_GIT_DIRNAME=protobuf
-PROTOBUF_VERSION=2.6.0
-PROTOBUF_RELEASE_URL=https://protobuf.googlecode.com/svn/rc/protobuf-${PROTOBUF_VERSION}.tar.gz
+PROTOBUF_VERSION=2.6.1
+PROTOBUF_RELEASE_URL=https://github.com/google/protobuf/releases/download/$PROTOBUF_VERSION/protobuf-$PROTOBUF_VERSION.tar.gz
 PROTOBUF_RELEASE_DIRNAME=protobuf-${PROTOBUF_VERSION}
 
 BUILD_MACOSX_X86_64=YES
@@ -37,14 +37,14 @@ BUILD_IOS_ARM64=YES
 
 PROTOBUF_SRC_DIR=/tmp/protobuf
 
-DARWIN=darwin13.4.0
+DARWIN=darwin`uname -r`
 
 XCODEDIR=`xcode-select --print-path`
 IOS_SDK_VERSION=`xcrun --sdk iphoneos --show-sdk-version`
-MIN_SDK_VERSION=7.1
+MIN_SDK_VERSION=6.0
 
 MACOSX_PLATFORM=${XCODEDIR}/Platforms/MacOSX.platform
-MACOSX_SYSROOT=${MACOSX_PLATFORM}/Developer/MacOSX10.9.sdk
+MACOSX_SYSROOT=${MACOSX_PLATFORM}/Developer/SDKs/MacOSX10.10.sdk
 
 IPHONEOS_PLATFORM=`xcrun --sdk iphoneos --show-sdk-platform-path`
 IPHONEOS_SYSROOT=`xcrun --sdk iphoneos --show-sdk-path`

@@ -1,4 +1,4 @@
-# Google Protobuf 2.6.0 - Mac OS X and iOS Support
+# Google Protobuf 2.6.1 - Mac OS X and iOS Support
 
 The script in this gist will help you buid the Google Protobuf library for use
 with Mac OS X and iOS.  Other methods (such as homebrew or direct compilation)
@@ -21,7 +21,7 @@ all you need to do is run the script.
 
 ```
 $ cd build-protobuf
-$ ./build-protobuf-2.6.0.sh
+$ ./build-protobuf.sh
 ```
 
 # Results
@@ -46,3 +46,14 @@ Create a build rule in your Xcode project with the following settings.
 Depending on where you choose to install the protobuf build, you will 
 need to adjust the path to `protoc`.
 
+# Import to XCode
+
+ * add `protobuf/include` and `protobuf/lib/libprotobuf-lite.a` into source
+ * change project C++ Language Dialect to `C++11 [-std=c++11]`
+ * change project C++ Runtime Types to `libc++ (LLVM C++ standard library with C++11 support`
+
+# Change logs
+
+ * update Mac SDK to 10.10
+ * update to protobuf 2.6.1 (include new download url)
+ * min iOS SDK down to 6.0
