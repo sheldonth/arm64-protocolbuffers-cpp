@@ -20,22 +20,24 @@ mkdir -p "${PREFIX}/platform"
 # A "NO" value will use the 2.6.0 tarball downloaded from googlecode.com.
 USE_GIT_MASTER=NO
 
+
+
 PROTOBUF_GIT_URL=https://github.com/google/protobuf.git
 PROTOBUF_GIT_DIRNAME=protobuf
-PROTOBUF_VERSION=2.6.1
-PROTOBUF_RELEASE_URL=https://github.com/google/protobuf/releases/download/$PROTOBUF_VERSION/protobuf-$PROTOBUF_VERSION.tar.gz
+PROTOBUF_VERSION=3.0.0-beta-2
+PROTOBUF_RELEASE_URL=https://github.com/google/protobuf/releases/download/v3.0.0-beta-2/protobuf-cpp-3.0.0-beta-2.tar.gz
 PROTOBUF_RELEASE_DIRNAME=protobuf-${PROTOBUF_VERSION}
 
 BUILD_MACOSX_X86_64=YES
 
-BUILD_I386_IOSSIM=YES
-BUILD_X86_64_IOSSIM=YES
+BUILD_I386_IOSSIM=NO
+BUILD_X86_64_IOSSIM=NO
 
-BUILD_IOS_ARMV7=YES
-BUILD_IOS_ARMV7S=YES
+BUILD_IOS_ARMV7=NO
+BUILD_IOS_ARMV7S=NO
 BUILD_IOS_ARM64=YES
 
-PROTOBUF_SRC_DIR=/tmp/protobuf
+PROTOBUF_SRC_DIR=./temp
 
 DARWIN=darwin`uname -r`
 
@@ -295,45 +297,45 @@ then
     )
 fi
 
-echo "$(tput setaf 2)"
-echo "###################################################################"
-echo "# Create Universal Libraries and Finalize the packaging"
-echo "###################################################################"
-echo "$(tput sgr0)"
-
-(
-    cd ${PREFIX}/platform
-    mkdir universal
-    lipo x86_64-sim/lib/libprotobuf.a i386-sim/lib/libprotobuf.a arm64-ios/lib/libprotobuf.a armv7s-ios/lib/libprotobuf.a armv7-ios/lib/libprotobuf.a -create -output universal/libprotobuf.a
-    lipo x86_64-sim/lib/libprotobuf-lite.a i386-sim/lib/libprotobuf-lite.a arm64-ios/lib/libprotobuf-lite.a armv7s-ios/lib/libprotobuf-lite.a armv7-ios/lib/libprotobuf-lite.a -create -output universal/libprotobuf-lite.a
-)
-
-(
-    cd ${PREFIX}
-    mkdir bin
-    mkdir lib
-    cp -r platform/x86_64-mac/bin/protoc bin
-    cp -r platform/x86_64-mac/lib/* lib
-    cp -r platform/universal/* lib
-    rm -rf platform
-    lipo -info lib/libprotobuf.a
-    lipo -info lib/libprotobuf-lite.a
-)
-
-if [ "${USE_GIT_MASTER}" == "YES" ]
-then
-    if [ -d "${PREFIX}-master" ]
-    then
-        rm -rf "${PREFIX}-master"
-    fi
-    mv "${PREFIX}" "${PREFIX}-master"
-else
-    if [ -d "${PREFIX}-${PROTOBUF_VERSION}" ]
-    then
-        rm -rf "${PREFIX}-${PROTOBUF_VERSION}"
-    fi
-    mv "${PREFIX}" "${PREFIX}-${PROTOBUF_VERSION}"
-fi
+# echo "$(tput setaf 2)"
+# echo "###################################################################"
+# echo "# Create Universal Libraries and Finalize the packaging"
+# echo "###################################################################"
+# echo "$(tput sgr0)"
+# 
+# (
+#     cd ${PREFIX}/platform
+#     mkdir universal
+#     lipo x86_64-sim/lib/libprotobuf.a i386-sim/lib/libprotobuf.a arm64-ios/lib/libprotobuf.a armv7s-ios/lib/libprotobuf.a armv7-ios/lib/libprotobuf.a -create -output universal/libprotobuf.a
+#     lipo x86_64-sim/lib/libprotobuf-lite.a i386-sim/lib/libprotobuf-lite.a arm64-ios/lib/libprotobuf-lite.a armv7s-ios/lib/libprotobuf-lite.a armv7-ios/lib/libprotobuf-lite.a -create -output universal/libprotobuf-lite.a
+# )
+# 
+# (
+#     cd ${PREFIX}
+#     mkdir bin
+#     mkdir lib
+#     cp -r platform/x86_64-mac/bin/protoc bin
+#     cp -r platform/x86_64-mac/lib/* lib
+#     cp -r platform/universal/* lib
+#     rm -rf platform
+#     lipo -info lib/libprotobuf.a
+#     lipo -info lib/libprotobuf-lite.a
+# )
+# 
+# if [ "${USE_GIT_MASTER}" == "YES" ]
+# then
+#     if [ -d "${PREFIX}-master" ]
+#     then
+#         rm -rf "${PREFIX}-master"
+#     fi
+#     mv "${PREFIX}" "${PREFIX}-master"
+# else
+#     if [ -d "${PREFIX}-${PROTOBUF_VERSION}" ]
+#     then
+#         rm -rf "${PREFIX}-${PROTOBUF_VERSION}"
+#     fi
+#     mv "${PREFIX}" "${PREFIX}-${PROTOBUF_VERSION}"
+# fi
 
 echo Done!
 
